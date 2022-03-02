@@ -8,6 +8,27 @@ const { helpers } = require('../lib/helpers');
 //import module conecction database
 const pool = require('../database');
 
+passport.use('local-login', new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback: true
+}, async (req, username, password, done) => {
+    const rows = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+    console.log('list users valid', rows);
+    if(rows.length > 0) {
+        const user = rows[0];
+        console.log('user get', user)
+        const validPassword = await helpers.comparePassword(password, user.password);
+        if(validPassword){
+            done(null, user, req.flash('success', 'Welcome! '+ user.username));
+        } else {
+            done(null, false, req.flash('message', 'password incorrect!'))
+        }
+    } else {
+        return done(null, false, req.flash('message', 'username does not exists!'));
+    }
+}));
+    
 passport.use('local-signup', new LocalStrategy({
     usernameField: 'username',
     passwordField: 'password',

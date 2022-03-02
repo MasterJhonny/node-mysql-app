@@ -4,11 +4,13 @@ const router = express.Router();
 
 const pool = require('../database');
 
-router.get('/add', (req, res) => {
+const { isLoggedIn } = require('../lib/auth');
+
+router.get('/add', isLoggedIn, (req, res) => {
     res.render('links/add');
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', isLoggedIn, async (req, res) => {
     const { title, url, description } = req.body;
     const newLink = {
         title, url, description
@@ -24,7 +26,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', isLoggedIn, async (req, res) => {
     try {
         const links = await pool.query('SELECT * FROM links;');
         res.render('links/list', { links });
@@ -34,7 +36,7 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isLoggedIn, async (req, res) => {
     try {
         const id = req.params.id;
         // const deleteLink = await pool.query(`DELETE FROM links WHERE id = ${id};`);
@@ -46,14 +48,14 @@ router.get('/delete/:id', async (req, res) => {
     }
 });
 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', isLoggedIn, async (req, res) => {
     const id = req.params.id;
     const links = await pool.query('SELECT * FROM links WHERE id = ? ', [id]);
     console.log('view link to edit', links[0]);
     res.render('links/edit', {link: links[0]});
 });
 
-router.post('/edit/:id', async (req, res) => {
+router.post('/edit/:id', isLoggedIn, async (req, res) => {
     const id = req.params.id;
     const { title, url, description } = req.body;
     const updateLink = {
