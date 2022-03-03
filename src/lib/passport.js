@@ -22,10 +22,10 @@ passport.use('local-login', new LocalStrategy({
         if(validPassword){
             done(null, user, req.flash('success', 'Welcome! '+ user.username));
         } else {
-            done(null, false, req.flash('message', 'password incorrect!'))
+            done(null, false, req.flash('message', 'username or password incorrect!'))
         }
     } else {
-        return done(null, false, req.flash('message', 'username does not exists!'));
+        return done(null, false, req.flash('message', 'username or password innorrect!'));
     }
 }));
     

@@ -1,0 +1,36 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#navbar {
+    height: 56px;
+    background-color: #362222 !important;
+    color: #FFCCD2 !important;
+}
+
+#navbar .container a {
+    margin: 0 !important;
+}
+
+#navbar .container .collapse a {
+    margin: 0 !important;
+}
+
+.index {
+    width: 100%;
+    height: calc(100vh - 56px);
+    background-image: url(https://i.postimg.cc/rz6vqYSW/fondo.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-sizing: border-box;
+
+}
+.index h1, a {
+    margin-top: 30px;
+}
+
+@media (max-width: 992px) {
+    #navbar {
+        height: auto;
+    }
+}

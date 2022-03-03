@@ -1,3 +1,4 @@
+// import modules package.json
 const express = require('express');
 const morgan = require('morgan');
 const { create } = require('express-handlebars');
@@ -6,8 +7,10 @@ const session = require('express-session');
 const MysqlStore = require('express-mysql-session');
 const passport = require('passport');
 
+// import keys of database
 const { database } = require('./keys');
 
+// import path module
 const path = require('path');
 
 // initializaciones
